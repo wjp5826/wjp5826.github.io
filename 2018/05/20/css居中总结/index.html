@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="css," />
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="云天">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="一、水平居中系列 inline或者inline-*元素  123.center-children &amp;#123;    text-align: center;&amp;#125;  inline、inline-block、inline-table、inline-flex等有效  一个块级元素    123.center&amp;#123;   margin:0 auto;    &amp;#125;  多个块级元素  使用">
+<meta name="keywords" content="css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css居中总结">
+<meta property="og:url" content="http://yoursite.com/2018/05/20/css居中总结/index.html">
 <meta property="og:site_name" content="云天">
+<meta property="og:description" content="一、水平居中系列 inline或者inline-*元素  123.center-children &amp;#123;    text-align: center;&amp;#125;  inline、inline-block、inline-table、inline-flex等有效  一个块级元素    123.center&amp;#123;   margin:0 auto;    &amp;#125;  多个块级元素  使用">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-19T16:48:14.094Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="云天">
+<meta name="twitter:title" content="css居中总结">
+<meta name="twitter:description" content="一、水平居中系列 inline或者inline-*元素  123.center-children &amp;#123;    text-align: center;&amp;#125;  inline、inline-block、inline-table、inline-flex等有效  一个块级元素    123.center&amp;#123;   margin:0 auto;    &amp;#125;  多个块级元素  使用">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/20/css居中总结/"/>
 
 
 
 
 
-  <title>云天</title>
+  <title>css居中总结 | 云天</title>
   
 
 
@@ -140,8 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -234,9 +238,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -266,9 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/20/css居中总结/" itemprop="url">css居中总结</a></h1>
+          <h1 class="post-title" itemprop="name headline">css居中总结</h1>
         
 
         <div class="post-meta">
@@ -318,9 +320,7 @@
       
 
       
-        
-          
-            <h3 id="一、水平居中系列"><a href="#一、水平居中系列" class="headerlink" title="一、水平居中系列"></a>一、水平居中系列</h3><ol>
+        <h3 id="一、水平居中系列"><a href="#一、水平居中系列" class="headerlink" title="一、水平居中系列"></a>一、水平居中系列</h3><ol>
 <li><p>inline或者inline-*元素</p>
  <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.center-children</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p> inline、inline-block、inline-table、inline-flex等有效</p>
@@ -363,8 +363,6 @@
    <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: center;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
 
-          
-        
       
     </div>
     
@@ -379,14 +377,20 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+        </div>
+      
+
+      
+      
+      
 
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -396,10 +400,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -407,6 +412,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -427,8 +436,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -479,6 +497,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、水平居中系列"><span class="nav-number">1.</span> <span class="nav-text">一、水平居中系列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、垂直居中系列"><span class="nav-number">2.</span> <span class="nav-text">二、垂直居中系列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、居中（垂直和水平）"><span class="nav-number">3.</span> <span class="nav-text">三、居中（垂直和水平）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -619,6 +653,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
