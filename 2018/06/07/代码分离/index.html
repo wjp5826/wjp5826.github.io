@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="javascript webpack react," />
 
 
 
@@ -79,13 +79,21 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="云天">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="一、为什么要进行代码拆分在以往的性能优化清单中，减少HTTP请求一直是其中的一项。事实上，也做到了。在目前的大多数应用开发中都会用到   webpack 进行应用的构建打包，从而将我们应用以及应用所需的模块打包成一个大 bundle。这样也确实是减少了HTTP的请求。但是这样做有几个明显的劣势：  首屏加载时间过长，导致白屏，移动端网络不稳定尤甚 当你修改了业务代码以后，整个大的 bundle 要">
+<meta name="keywords" content="javascript webpack react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码分离">
+<meta property="og:url" content="http://yoursite.com/2018/06/07/代码分离/index.html">
 <meta property="og:site_name" content="云天">
+<meta property="og:description" content="一、为什么要进行代码拆分在以往的性能优化清单中，减少HTTP请求一直是其中的一项。事实上，也做到了。在目前的大多数应用开发中都会用到   webpack 进行应用的构建打包，从而将我们应用以及应用所需的模块打包成一个大 bundle。这样也确实是减少了HTTP的请求。但是这样做有几个明显的劣势：  首屏加载时间过长，导致白屏，移动端网络不稳定尤甚 当你修改了业务代码以后，整个大的 bundle 要">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/06/07/代码分离/01.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/07/代码分离/02.png">
+<meta property="og:updated_time" content="2018-06-07T15:46:42.633Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="云天">
+<meta name="twitter:title" content="代码分离">
+<meta name="twitter:description" content="一、为什么要进行代码拆分在以往的性能优化清单中，减少HTTP请求一直是其中的一项。事实上，也做到了。在目前的大多数应用开发中都会用到   webpack 进行应用的构建打包，从而将我们应用以及应用所需的模块打包成一个大 bundle。这样也确实是减少了HTTP的请求。但是这样做有几个明显的劣势：  首屏加载时间过长，导致白屏，移动端网络不稳定尤甚 当你修改了业务代码以后，整个大的 bundle 要">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/07/代码分离/01.png">
 
 
 
@@ -115,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/07/代码分离/"/>
 
 
 
 
 
-  <title>云天</title>
+  <title>代码分离 | 云天</title>
   
 
 
@@ -140,8 +148,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -234,168 +241,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/07/浅谈闭包/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="云天">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="云天">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/07/浅谈闭包/" itemprop="url">浅谈闭包</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-07T22:18:31+08:00">
-                2018-06-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="一、现状"><a href="#一、现状" class="headerlink" title="一、现状"></a>一、现状</h4><p>闭包是jser绕不过的坎，一直在都在说，套用 <em>simpson</em> 的话来说：JavaScript中闭包无处不在，你只需要能够识别并拥抱它。</p>
-<p>闭包是基于词法作用域书写代码时的自然结果，你甚至不需要为了利用它们而有意识的去创建闭包。闭包的创建和使用在你的代码中随处可见。你缺少的只是根据你的意愿来识别、拥抱和影响闭包的思维环境</p>
-<h4 id="二、什么是闭包-closure"><a href="#二、什么是闭包-closure" class="headerlink" title="二、什么是闭包(closure)"></a>二、什么是闭包(closure)</h4><blockquote>
-<p>当函数可以记住并访问所在的词法作用域时，就产生了闭包。即使函数是在当前词法作用域之外执行             –《你不知道的js》（上卷）</p>
-</blockquote>
-<blockquote>
-<p>闭包是指有权访问另一个函数作用域中的变量的函数 –《JavaScript高级程序设计》</p>
-</blockquote>
-<p>先来看一个例子：<br>例子1：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(a); <span class="comment">// 2</span></span><br><span class="line">    &#125; </span><br><span class="line">    bar();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
-<p>这是闭包吗？<br>这个代码从技术上来说是，但也可以说不是。准确的来说bar()对a的引用的方法是词法作用域的查找规则。我们再来看：<br>例子2：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(a)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> bar;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> baz = foo();</span><br><span class="line">baz(); <span class="comment">// 2, 这就是闭包了</span></span><br></pre></td></tr></table></figure>
-<p>在例2中，我们将bar()函数本身当做一个值类型进行传递，函数bar()能够访问foo()的内部作用域。在这个例子中，它在自己定义的词法作用域以外的地方执行。</p>
-<h3 id="三、怎么形成的"><a href="#三、怎么形成的" class="headerlink" title="三、怎么形成的"></a>三、怎么形成的</h3><p>要了解清楚，得先了解几个概念</p>
-<ul>
-<li>作用域链(scope chain)</li>
-<li>词法作用域</li>
-</ul>
-<h4 id="词法作用域"><a href="#词法作用域" class="headerlink" title="词法作用域"></a>词法作用域</h4><p>每个函数都有自己的执行环境。这个环境可以访问外部环境，以此类推。每个环境能访问到的标识符集合，称之为 <strong>作用域</strong>，也就是<strong>词法作用域</strong>。</p>
-<h4 id="作用域链-scope-chain"><a href="#作用域链-scope-chain" class="headerlink" title="作用域链(scope chain)"></a>作用域链(scope chain)</h4><p>将作用域一层一层的嵌套，就形成了<strong>作用域链</strong></p>
-<p>如下，通常我们都希望 <strong>foo()</strong> 在执行完成以后，整个的内部作用域都被销毁。因为我们知道引擎有垃圾回收机制用来释放不再使用的内存空间。由于看上去 <strong>foo()</strong>的内容不会再被使用，所以很自然的想到会对其回收。但是，事实上内部作用域依然存在</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> globalVar = <span class="number">10</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> fooVar = <span class="number">20</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> barVar = <span class="number">30</span>;</span><br><span class="line">        <span class="keyword">return</span> globalVar + fooVar + barVar;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> bar;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> baz = foo();</span><br><span class="line">baz();</span><br></pre></td></tr></table></figure>
-<p>如上，用一张图表示<br><img src="http://p2u45zfh0.bkt.clouddn.com/%E6%90%9C%E7%8B%97%E6%88%AA%E5%9B%BE20180121154416.png" alt="作用域链"></p>
-<p>这个作用域链在函数创建的时候就保存起来了。</p>
-<p><strong>baz()</strong>函数在执行的时候(执行<strong>bar</strong>函数)，将当前的变量对象（由于当前的环境是函数，所以将其活动对象作为变量对象）添加到作用域链的前端。此时，由于<strong>bar</strong>在执行，而作用域链也存在，所以可以在作用域链上进行查找，去访问<strong>foo</strong>的变量。</p>
-<h3 id="四、闭包的应用场景有哪些"><a href="#四、闭包的应用场景有哪些" class="headerlink" title="四、闭包的应用场景有哪些"></a>四、闭包的应用场景有哪些</h3><ul>
-<li>创建私有变量或函数</li>
-</ul>
-<h3 id="五、闭包的缺点"><a href="#五、闭包的缺点" class="headerlink" title="五、闭包的缺点"></a>五、闭包的缺点</h3><ul>
-<li>闭包中的值是存在于内存中，滥用的话会导致内存消耗过大</li>
-</ul>
-<p><strong>闭包经典问题</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数作用：希望它返回一个数组。该数组的元素为遍历的索引值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> res = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>,len = <span class="number">5</span>;i &lt; len;i++)&#123;</span><br><span class="line">        res[i] = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>返回的结果跟我们期待的不一样，因为：闭包保存的是整个变量对象，而不是每个变量。<br>解决方案：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> res = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>,len = <span class="number">5</span>;i &lt; len;i++)&#123;</span><br><span class="line">        res[i] = (<span class="function"><span class="keyword">function</span>(<span class="params">i</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> i;</span><br><span class="line">        &#125;)(i)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里，没有没有把闭包直接赋值给数组。而是定义了一个匿名函数，并且将立即执行该匿名函数的结果赋值给数组，由于参数是按值传递的，所以会将当前值传给参数num。</p>
-<blockquote>
-<p>参考资料：《你不知道的js》（中卷）、《JavaScript高级程序设计》</p>
-</blockquote>
-<p>完</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -425,9 +273,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/07/代码分离/" itemprop="url">代码分离</a></h1>
+          <h1 class="post-title" itemprop="name headline">代码分离</h1>
         
 
         <div class="post-meta">
@@ -477,9 +323,7 @@
       
 
       
-        
-          
-            <h3 id="一、为什么要进行代码拆分"><a href="#一、为什么要进行代码拆分" class="headerlink" title="一、为什么要进行代码拆分"></a>一、为什么要进行代码拆分</h3><p>在以往的性能优化清单中，减少<code>HTTP</code>请求一直是其中的一项。事实上，也做到了。在目前的大多数应用开发中都会用到   <code>webpack</code> 进行应用的构建打包，从而将我们应用以及应用所需的模块打包成一个大 <code>bundle</code>。这样也确实是减少了<code>HTTP</code>的请求。但是这样做有几个明显的劣势：</p>
+        <h3 id="一、为什么要进行代码拆分"><a href="#一、为什么要进行代码拆分" class="headerlink" title="一、为什么要进行代码拆分"></a>一、为什么要进行代码拆分</h3><p>在以往的性能优化清单中，减少<code>HTTP</code>请求一直是其中的一项。事实上，也做到了。在目前的大多数应用开发中都会用到   <code>webpack</code> 进行应用的构建打包，从而将我们应用以及应用所需的模块打包成一个大 <code>bundle</code>。这样也确实是减少了<code>HTTP</code>的请求。但是这样做有几个明显的劣势：</p>
 <ol>
 <li>首屏加载时间过长，导致白屏，移动端网络不稳定尤甚</li>
 <li>当你修改了业务代码以后，整个大的 <code>bundle</code> 要重新下载。</li>
@@ -522,8 +366,6 @@
 <p>考虑这样一个场景，你有多个tab，可能有一些tab你从进入应用到离开应用都不会去点击它，那么每个tab页面下的组件就很适合进行代码拆分。这完全根据你的应用场景来决定的。</p>
 <p>如果你想对你的一些组件进行拆分，也是同样的使用<code>react-loadable</code></p>
 
-          
-        
       
     </div>
     
@@ -538,175 +380,40 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/css居中总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="云天">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="云天">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/20/css居中总结/" itemprop="url">css居中总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-20T00:36:53+08:00">
-                2018-05-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/javascript-webpack-react/" rel="tag"># javascript webpack react</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="一、水平居中系列"><a href="#一、水平居中系列" class="headerlink" title="一、水平居中系列"></a>一、水平居中系列</h3><ol>
-<li><p>inline或者inline-*元素</p>
- <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.center-children</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> inline、inline-block、inline-table、inline-flex等有效</p>
-</li>
-<li><p>一个块级元素</p>
-   <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.center</span>&#123;</span><br><span class="line">   <span class="attribute">margin</span>:<span class="number">0</span> auto;   </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>多个块级元素</p>
-<p> 使用inline-block和text-align配合或者使用flex</p>
-</li>
-</ol>
-<h3 id="二、垂直居中系列"><a href="#二、垂直居中系列" class="headerlink" title="二、垂直居中系列"></a>二、垂直居中系列</h3><ol>
-<li><p>inline或者inline-*元素<br>1、单行：上下添加相等的内边距</p>
-   <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.link</span> &#123;</span><br><span class="line">    <span class="attribute">padding-top</span>: <span class="number">30px</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">30px</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p>2、多行：</p>
- <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 可以模拟表格</span><br><span class="line"><span class="selector-class">.center-table</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>:table;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.center-table</span> <span class="selector-tag">children</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>:table-cell;</span><br><span class="line">  <span class="attribute">vertical-align</span>:center;</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">```<span class="selector-tag">css</span></span><br><span class="line">// 可以使用flexbox</span><br><span class="line"><span class="selector-class">.flex-center-vertically</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: center;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">400px</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol start="2">
-<li><p>块级元素<br>1). 知道块级元素的高度</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="selector-class">.child</span> &#123;</span><br><span class="line">   <span class="attribute">position</span>: absolute;</span><br><span class="line">   <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">   <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">   <span class="attribute">margin-top</span>: -<span class="number">50px</span>;                                </span><br><span class="line">   box-sizing: border-box; */</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>2). 不知道块级元素的高度</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">     <span class="attribute">position</span>: relative;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="selector-class">.child</span> &#123;</span><br><span class="line">     <span class="attribute">position</span>: absolute;</span><br><span class="line">     <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">     <span class="attribute">transform</span>: <span class="built_in">translateY</span>(-50%);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>3). 使用flexbox</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">   <span class="attribute">display</span>: flex;</span><br><span class="line">   <span class="attribute">flex-direction</span>: column;</span><br><span class="line">   <span class="attribute">justify-content</span>: center;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="三、居中（垂直和水平）"><a href="#三、居中（垂直和水平）" class="headerlink" title="三、居中（垂直和水平）"></a>三、居中（垂直和水平）</h3><ol>
-<li><p>固定宽度和高度</p>
-   <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.child</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">20px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">margin</span>: -<span class="number">70px</span> <span class="number">0</span> <span class="number">0</span> -<span class="number">170px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol start="2">
-<li><p>不知道宽度和高度</p>
-   <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.child</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%, -50%);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol start="3">
-<li><p>使用flexbox</p>
-   <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: center;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/20/css居中总结/" rel="next" title="css居中总结">
+                <i class="fa fa-chevron-left"></i> css居中总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/07/浅谈闭包/" rel="prev" title="浅谈闭包">
+                浅谈闭包 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
       
     </footer>
   </div>
@@ -716,10 +423,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -727,6 +435,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -747,8 +459,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -799,6 +520,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、为什么要进行代码拆分"><span class="nav-number">1.</span> <span class="nav-text">一、为什么要进行代码拆分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、怎样对代码进行拆分"><span class="nav-number">2.</span> <span class="nav-text">二、怎样对代码进行拆分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、在入口处配置进行分离"><span class="nav-number">2.1.</span> <span class="nav-text">1、在入口处配置进行分离</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、防止重复，使用-CommonsChunkPlugin"><span class="nav-number">2.2.</span> <span class="nav-text">2、防止重复，使用  CommonsChunkPlugin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、使用import-来进行动态导入"><span class="nav-number">2.3.</span> <span class="nav-text">3、使用import()来进行动态导入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完整代码"><span class="nav-number">2.4.</span> <span class="nav-text">完整代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最后"><span class="nav-number">2.5.</span> <span class="nav-text">最后</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -939,6 +676,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
