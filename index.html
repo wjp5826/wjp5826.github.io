@@ -216,6 +216,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-read">
+          <a href="/read/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            读书
+          </a>
+        </li>
+      
 
       
     </ul>
@@ -235,6 +245,167 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/07/代码分离/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="云天">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云天">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/07/代码分离/" itemprop="url">代码分离</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-07T22:18:31+08:00">
+                2018-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="一、为什么要进行代码拆分"><a href="#一、为什么要进行代码拆分" class="headerlink" title="一、为什么要进行代码拆分"></a>一、为什么要进行代码拆分</h3><p>在以往的性能优化清单中，减少<code>HTTP</code>请求一直是其中的一项。事实上，也做到了。在目前的大多数应用开发中都会用到   <code>webpack</code> 进行应用的构建打包，从而将我们应用以及应用所需的模块打包成一个大 <code>bundle</code>。这样也确实是减少了<code>HTTP</code>的请求。但是这样做有几个明显的劣势：</p>
+<ol>
+<li>首屏加载时间过长，导致白屏，移动端网络不稳定尤甚</li>
+<li>当你修改了业务代码以后，整个大的 <code>bundle</code> 要重新下载。</li>
+</ol>
+<h3 id="二、怎样对代码进行拆分"><a href="#二、怎样对代码进行拆分" class="headerlink" title="二、怎样对代码进行拆分"></a>二、怎样对代码进行拆分</h3><p>先看一下 <code>webpack</code> 进行代码分离的几种方法：</p>
+<ul>
+<li>在入口处配置 <code>entry</code> 进行分离</li>
+<li>防止重复，使用<code>CommonsChunkPlugin</code>去重和分离<code>chunk</code></li>
+<li>动态导入：使用模块的内联函数</li>
+</ul>
+<h4 id="1、在入口处配置进行分离"><a href="#1、在入口处配置进行分离" class="headerlink" title="1、在入口处配置进行分离"></a>1、在入口处配置进行分离</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">entry: &#123;</span><br><span class="line">        app: <span class="string">'./src/entry.js'</span>,</span><br><span class="line">        vendor: [<span class="string">'react'</span>, <span class="string">'react-dom'</span>]</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+<p>对于一些不常变动的库，比如框架，第三方依赖等等，可以直接在入口就进行代码的分离，就好比这里的<code>react</code>、<code>react-dom</code></p>
+<h4 id="2、防止重复，使用-CommonsChunkPlugin"><a href="#2、防止重复，使用-CommonsChunkPlugin" class="headerlink" title="2、防止重复，使用  CommonsChunkPlugin"></a>2、防止重复，使用  CommonsChunkPlugin</h4><p>这个插件可以将公共模块依赖提取到已有的chunk中，比如下面这样</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">    name: <span class="string">'common'</span>,</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure>
+<p>当然，这个插件在<code>webpack</code>4.0以上的版本被废弃掉了，具体的可以查看<a href="https://webpack.docschina.org/plugins/split-chunks-plugin/" target="_blank" rel="noopener">SplitChunksPlugin</a></p>
+<h4 id="3、使用import-来进行动态导入"><a href="#3、使用import-来进行动态导入" class="headerlink" title="3、使用import()来进行动态导入"></a>3、使用<code>import()</code>来进行动态导入</h4><p><code>import()</code>的相关文档可以查看<a href="https://webpack.docschina.org/api/module-methods#import-" target="_blank" rel="noopener">import()相关文档</a></p>
+<p>当然，使用<code>import()</code>需要用到<code>babel-plugin-syntax-dynamic-import</code>插件</p>
+<p><code>import()</code>的使用如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(<span class="string">'lodash'</span>).then(<span class="function"><span class="params">_</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>但这样写的话，每次都很麻烦，这里有一个高阶组件来处理这个事情</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">asyncComponent</span>(<span class="params">importComponent</span>) </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">AsyncComponent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">      <span class="keyword">super</span>(props);</span><br><span class="line">      <span class="keyword">this</span>.state = &#123;</span><br><span class="line">        Component: <span class="literal">null</span>,</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    componentDidMount() &#123;</span><br><span class="line">       importComponent().then(<span class="function"><span class="params">module</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// const &#123; default: component &#125; = res;</span></span><br><span class="line">         <span class="keyword">this</span>.setState(&#123; <span class="attr">Component</span>: <span class="built_in">module</span>.default &#125;);</span><br><span class="line">       &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    render()&#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; Component &#125; = <span class="keyword">this</span>.state;</span><br><span class="line">      <span class="keyword">return</span> Component ? &lt;Component &#123; ...this.props &#125; /&gt; : null;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return AsyncComponent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有了这个高阶组件，使用就方便了：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Result = asyncComponent(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./container/result/result'</span>))</span><br></pre></td></tr></table></figure>
+<p><code>import</code>规范不允许控制模块的名称或其他的属性，因为<code>chunks</code>是<code>webpack</code>的概念。如果像上面那样直接使用的话，输出的就像下面这样</p>
+<p><img src="/2018/06/07/代码分离/01.png" alt="图片"></p>
+<p>好在<code>webpack</code>可以注释接受一些特殊的参数,但还要在配置文件的<code>output</code>加上<code>chunkFilename</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一处修改</span></span><br><span class="line"> <span class="keyword">const</span> Result = asyncComponent(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "result" */</span> <span class="string">'./container/result/result'</span>))</span><br><span class="line"><span class="comment">// 第二处修改</span></span><br><span class="line">output: &#123;</span><br><span class="line">        path: <span class="string">'/'</span>,</span><br><span class="line">        publicPath: <span class="string">'/'</span>,</span><br><span class="line">        chunkFilename: <span class="string">'[name].bundle.js'</span>,</span><br><span class="line">        filename: <span class="string">'[name].[hash].js'</span>,</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+<p>这样，上面的模块就会被命名为<code>result.bundle.js</code>，而不是<code>[id].bundle.js</code>。</p>
+<p>其实做到这一步，就已经做到了代码拆分。但是有一个比较好的库更适合做这个事情，这个库就是<code>react-loadable</code>，使用如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Home = Loadable(&#123;</span><br><span class="line">    loader: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "Home" */</span> <span class="string">'./container/Home/home'</span>),</span><br><span class="line">    loading: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &lt;div&gt;loading&lt;/div&gt;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>有的组件加载实在过快（&lt;200ms），那么这个我们可以给一<code>Loading</code>组件来设置延迟时间</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Loading</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (props.error) &#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;div&gt;Error! &lt;button onClick=&#123; props.retry &#125;&gt;Retry&lt;/button&gt;&lt;/div&gt;;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (props.pastDelay) &#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;div&gt;Loading...&lt;/div&gt;;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接着使用<code>react-loadable</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Home = Loadable(&#123;</span><br><span class="line">    loader: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "Home" */</span> <span class="string">'./container/Home/home'</span>),</span><br><span class="line">    loading: Loading,</span><br><span class="line">    delay: <span class="number">200</span>, <span class="comment">// 200ms内加载出来的话，不显示加载状态</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>想了解更多<code>react-loadable</code>，可以点击<a href="https://github.com/jamiebuilds/react-loadable" target="_blank" rel="noopener">react-loadable</a></p>
+<h4 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Route, Router, BrowserRouter, HashRouter, Switch, Redirect &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ConnectedRouter &#125; <span class="keyword">from</span> <span class="string">'react-router-redux'</span>;</span><br><span class="line"><span class="keyword">import</span> createHistory <span class="keyword">from</span> <span class="string">'history/createHashHistory'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./container/app'</span>;</span><br><span class="line"><span class="keyword">import</span> Loadable <span class="keyword">from</span> <span class="string">'react-loadable'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Home = Loadable(&#123;</span><br><span class="line">    loader: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "Home" */</span> <span class="string">'./container/Home/home'</span>),</span><br><span class="line">    loading: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &lt;div&gt;loading&lt;/div&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Result = Loadable(&#123;</span><br><span class="line">    loader: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "result" */</span> <span class="string">'./container/result/result'</span>),</span><br><span class="line">    loading: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &lt;div&gt;loading...&lt;/div&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> history = createHistory();</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Routers</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;HashRouter&gt;</span><br><span class="line">                &lt;App&gt;</span><br><span class="line">                    &lt;Switch&gt;</span><br><span class="line">                        &lt;Route exact path=<span class="string">"/"</span> render=&#123;() =&gt; (&lt;Redirect to="/home" /&gt;)&#125; /&gt;</span><br><span class="line">                        &lt;Route path="/home" component=&#123;Home&#125; /&gt;</span><br><span class="line">                        &lt;Route path="/second" component=&#123;Result&#125; /&gt;</span><br><span class="line">                    &lt;/Switch&gt;</span><br><span class="line">                &lt;/App&gt;</span><br><span class="line">            &lt;/HashRouter&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Routers;</span><br></pre></td></tr></table></figure>
+<h4 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h4><p>代码拆分有两种思路，一种是基于路由拆分，一种是基于组件拆分</p>
+<p><img src="/2018/06/07/代码分离/02.png" alt="图片描述"></p>
+<p>左边这幅图是基于路由拆分的示意图，右边的是基于组件拆分的示意图，可以看到基于组件进行拆分的粒度更细一点。</p>
+<p>考虑这样一个场景，你有多个tab，可能有一些tab你从进入应用到离开应用都不会去点击它，那么每个tab页面下的组件就很适合进行代码拆分。这完全根据你的应用场景来决定的。</p>
+<p>如果你想对你的一些组件进行拆分，也是同样的使用<code>react-loadable</code></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -360,167 +531,6 @@
 <p>参考资料：《你不知道的js》（中卷）、《JavaScript高级程序设计》</p>
 </blockquote>
 <p>完</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/07/代码分离/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="云天">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="云天">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/07/代码分离/" itemprop="url">代码分离</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-07T22:18:31+08:00">
-                2018-06-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="一、为什么要进行代码拆分"><a href="#一、为什么要进行代码拆分" class="headerlink" title="一、为什么要进行代码拆分"></a>一、为什么要进行代码拆分</h3><p>在以往的性能优化清单中，减少<code>HTTP</code>请求一直是其中的一项。事实上，也做到了。在目前的大多数应用开发中都会用到   <code>webpack</code> 进行应用的构建打包，从而将我们应用以及应用所需的模块打包成一个大 <code>bundle</code>。这样也确实是减少了<code>HTTP</code>的请求。但是这样做有几个明显的劣势：</p>
-<ol>
-<li>首屏加载时间过长，导致白屏，移动端网络不稳定尤甚</li>
-<li>当你修改了业务代码以后，整个大的 <code>bundle</code> 要重新下载。</li>
-</ol>
-<h3 id="二、怎样对代码进行拆分"><a href="#二、怎样对代码进行拆分" class="headerlink" title="二、怎样对代码进行拆分"></a>二、怎样对代码进行拆分</h3><p>先看一下 <code>webpack</code> 进行代码分离的几种方法：</p>
-<ul>
-<li>在入口处配置 <code>entry</code> 进行分离</li>
-<li>防止重复，使用<code>CommonsChunkPlugin</code>去重和分离<code>chunk</code></li>
-<li>动态导入：使用模块的内联函数</li>
-</ul>
-<h4 id="1、在入口处配置进行分离"><a href="#1、在入口处配置进行分离" class="headerlink" title="1、在入口处配置进行分离"></a>1、在入口处配置进行分离</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">entry: &#123;</span><br><span class="line">        app: <span class="string">'./src/entry.js'</span>,</span><br><span class="line">        vendor: [<span class="string">'react'</span>, <span class="string">'react-dom'</span>]</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
-<p>对于一些不常变动的库，比如框架，第三方依赖等等，可以直接在入口就进行代码的分离，就好比这里的<code>react</code>、<code>react-dom</code></p>
-<h4 id="2、防止重复，使用-CommonsChunkPlugin"><a href="#2、防止重复，使用-CommonsChunkPlugin" class="headerlink" title="2、防止重复，使用  CommonsChunkPlugin"></a>2、防止重复，使用  CommonsChunkPlugin</h4><p>这个插件可以将公共模块依赖提取到已有的chunk中，比如下面这样</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">    name: <span class="string">'common'</span>,</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure>
-<p>当然，这个插件在<code>webpack</code>4.0以上的版本被废弃掉了，具体的可以查看<a href="https://webpack.docschina.org/plugins/split-chunks-plugin/" target="_blank" rel="noopener">SplitChunksPlugin</a></p>
-<h4 id="3、使用import-来进行动态导入"><a href="#3、使用import-来进行动态导入" class="headerlink" title="3、使用import()来进行动态导入"></a>3、使用<code>import()</code>来进行动态导入</h4><p><code>import()</code>的相关文档可以查看<a href="https://webpack.docschina.org/api/module-methods#import-" target="_blank" rel="noopener">import()相关文档</a></p>
-<p>当然，使用<code>import()</code>需要用到<code>babel-plugin-syntax-dynamic-import</code>插件</p>
-<p><code>import()</code>的使用如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(<span class="string">'lodash'</span>).then(<span class="function"><span class="params">_</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>但这样写的话，每次都很麻烦，这里有一个高阶组件来处理这个事情</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">asyncComponent</span>(<span class="params">importComponent</span>) </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">AsyncComponent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">      <span class="keyword">super</span>(props);</span><br><span class="line">      <span class="keyword">this</span>.state = &#123;</span><br><span class="line">        Component: <span class="literal">null</span>,</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    componentDidMount() &#123;</span><br><span class="line">       importComponent().then(<span class="function"><span class="params">module</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// const &#123; default: component &#125; = res;</span></span><br><span class="line">         <span class="keyword">this</span>.setState(&#123; <span class="attr">Component</span>: <span class="built_in">module</span>.default &#125;);</span><br><span class="line">       &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    render()&#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; Component &#125; = <span class="keyword">this</span>.state;</span><br><span class="line">      <span class="keyword">return</span> Component ? &lt;Component &#123; ...this.props &#125; /&gt; : null;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return AsyncComponent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>有了这个高阶组件，使用就方便了：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Result = asyncComponent(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./container/result/result'</span>))</span><br></pre></td></tr></table></figure>
-<p><code>import</code>规范不允许控制模块的名称或其他的属性，因为<code>chunks</code>是<code>webpack</code>的概念。如果像上面那样直接使用的话，输出的就像下面这样</p>
-<p><img src="/2018/06/07/代码分离/01.png" alt="图片描述"></p>
-<p>好在<code>webpack</code>可以注释接受一些特殊的参数,但还要在配置文件的<code>output</code>加上<code>chunkFilename</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一处修改</span></span><br><span class="line"> <span class="keyword">const</span> Result = asyncComponent(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "result" */</span> <span class="string">'./container/result/result'</span>))</span><br><span class="line"><span class="comment">// 第二处修改</span></span><br><span class="line">output: &#123;</span><br><span class="line">        path: <span class="string">'/'</span>,</span><br><span class="line">        publicPath: <span class="string">'/'</span>,</span><br><span class="line">        chunkFilename: <span class="string">'[name].bundle.js'</span>,</span><br><span class="line">        filename: <span class="string">'[name].[hash].js'</span>,</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
-<p>这样，上面的模块就会被命名为<code>result.bundle.js</code>，而不是<code>[id].bundle.js</code>。</p>
-<p>其实做到这一步，就已经做到了代码拆分。但是有一个比较好的库更适合做这个事情，这个库就是<code>react-loadable</code>，使用如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Home = Loadable(&#123;</span><br><span class="line">    loader: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "Home" */</span> <span class="string">'./container/Home/home'</span>),</span><br><span class="line">    loading: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &lt;div&gt;loading&lt;/div&gt;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>有的组件加载实在过快（&lt;200ms），那么这个我们可以给一<code>Loading</code>组件来设置延迟时间</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Loading</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (props.error) &#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;div&gt;Error! &lt;button onClick=&#123; props.retry &#125;&gt;Retry&lt;/button&gt;&lt;/div&gt;;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (props.pastDelay) &#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;div&gt;Loading...&lt;/div&gt;;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>接着使用<code>react-loadable</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Home = Loadable(&#123;</span><br><span class="line">    loader: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "Home" */</span> <span class="string">'./container/Home/home'</span>),</span><br><span class="line">    loading: Loading,</span><br><span class="line">    delay: <span class="number">200</span>, <span class="comment">// 200ms内加载出来的话，不显示加载状态</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>想了解更多<code>react-loadable</code>，可以点击<a href="https://github.com/jamiebuilds/react-loadable" target="_blank" rel="noopener">react-loadable</a></p>
-<h4 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Route, Router, BrowserRouter, HashRouter, Switch, Redirect &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; ConnectedRouter &#125; <span class="keyword">from</span> <span class="string">'react-router-redux'</span>;</span><br><span class="line"><span class="keyword">import</span> createHistory <span class="keyword">from</span> <span class="string">'history/createHashHistory'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./container/app'</span>;</span><br><span class="line"><span class="keyword">import</span> Loadable <span class="keyword">from</span> <span class="string">'react-loadable'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Home = Loadable(&#123;</span><br><span class="line">    loader: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "Home" */</span> <span class="string">'./container/Home/home'</span>),</span><br><span class="line">    loading: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &lt;div&gt;loading&lt;/div&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Result = Loadable(&#123;</span><br><span class="line">    loader: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "result" */</span> <span class="string">'./container/result/result'</span>),</span><br><span class="line">    loading: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &lt;div&gt;loading...&lt;/div&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> history = createHistory();</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Routers</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;HashRouter&gt;</span><br><span class="line">                &lt;App&gt;</span><br><span class="line">                    &lt;Switch&gt;</span><br><span class="line">                        &lt;Route exact path=<span class="string">"/"</span> render=&#123;() =&gt; (&lt;Redirect to="/home" /&gt;)&#125; /&gt;</span><br><span class="line">                        &lt;Route path="/home" component=&#123;Home&#125; /&gt;</span><br><span class="line">                        &lt;Route path="/second" component=&#123;Result&#125; /&gt;</span><br><span class="line">                    &lt;/Switch&gt;</span><br><span class="line">                &lt;/App&gt;</span><br><span class="line">            &lt;/HashRouter&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Routers;</span><br></pre></td></tr></table></figure>
-<h4 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h4><p>代码拆分有两种思路，一种是基于路由拆分，一种是基于组件拆分</p>
-<p><img src="/2018/06/07/代码分离/02.png" alt="图片描述"></p>
-<p>左边这幅图是基于路由拆分的示意图，右边的是基于组件拆分的示意图，可以看到基于组件进行拆分的粒度更细一点。</p>
-<p>考虑这样一个场景，你有多个tab，可能有一些tab你从进入应用到离开应用都不会去点击它，那么每个tab页面下的组件就很适合进行代码拆分。这完全根据你的应用场景来决定的。</p>
-<p>如果你想对你的一些组件进行拆分，也是同样的使用<code>react-loadable</code></p>
 
           
         
@@ -776,7 +786,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

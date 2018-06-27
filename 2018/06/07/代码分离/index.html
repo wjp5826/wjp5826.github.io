@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="javascript webpack react," />
+  <meta name="keywords" content="javascript,webpack,react," />
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="一、为什么要进行代码拆分在以往的性能优化清单中，减少HTTP请求一直是其中的一项。事实上，也做到了。在目前的大多数应用开发中都会用到   webpack 进行应用的构建打包，从而将我们应用以及应用所需的模块打包成一个大 bundle。这样也确实是减少了HTTP的请求。但是这样做有几个明显的劣势：  首屏加载时间过长，导致白屏，移动端网络不稳定尤甚 当你修改了业务代码以后，整个大的 bundle 要">
-<meta name="keywords" content="javascript webpack react">
+<meta name="keywords" content="javascript,webpack,react">
 <meta property="og:type" content="article">
 <meta property="og:title" content="代码分离">
 <meta property="og:url" content="http://yoursite.com/2018/06/07/代码分离/index.html">
@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/06/07/代码分离/01.png">
 <meta property="og:image" content="http://yoursite.com/2018/06/07/代码分离/02.png">
-<meta property="og:updated_time" content="2018-06-07T15:46:42.633Z">
+<meta property="og:updated_time" content="2018-06-09T15:57:31.682Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代码分离">
 <meta name="twitter:description" content="一、为什么要进行代码拆分在以往的性能优化清单中，减少HTTP请求一直是其中的一项。事实上，也做到了。在目前的大多数应用开发中都会用到   webpack 进行应用的构建打包，从而将我们应用以及应用所需的模块打包成一个大 bundle。这样也确实是减少了HTTP的请求。但是这样做有几个明显的劣势：  首屏加载时间过长，导致白屏，移动端网络不稳定尤甚 当你修改了业务代码以后，整个大的 bundle 要">
@@ -223,6 +223,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-read">
+          <a href="/read/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            读书
+          </a>
+        </li>
+      
 
       
     </ul>
@@ -348,7 +358,7 @@
 <p>有了这个高阶组件，使用就方便了：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Result = asyncComponent(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./container/result/result'</span>))</span><br></pre></td></tr></table></figure>
 <p><code>import</code>规范不允许控制模块的名称或其他的属性，因为<code>chunks</code>是<code>webpack</code>的概念。如果像上面那样直接使用的话，输出的就像下面这样</p>
-<p><img src="/2018/06/07/代码分离/01.png" alt="图片描述"></p>
+<p><img src="/2018/06/07/代码分离/01.png" alt="图片"></p>
 <p>好在<code>webpack</code>可以注释接受一些特殊的参数,但还要在配置文件的<code>output</code>加上<code>chunkFilename</code></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一处修改</span></span><br><span class="line"> <span class="keyword">const</span> Result = asyncComponent(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "result" */</span> <span class="string">'./container/result/result'</span>))</span><br><span class="line"><span class="comment">// 第二处修改</span></span><br><span class="line">output: &#123;</span><br><span class="line">        path: <span class="string">'/'</span>,</span><br><span class="line">        publicPath: <span class="string">'/'</span>,</span><br><span class="line">        chunkFilename: <span class="string">'[name].bundle.js'</span>,</span><br><span class="line">        filename: <span class="string">'[name].[hash].js'</span>,</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
 <p>这样，上面的模块就会被命名为<code>result.bundle.js</code>，而不是<code>[id].bundle.js</code>。</p>
@@ -382,7 +392,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/javascript-webpack-react/" rel="tag"># javascript webpack react</a>
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
+          
+            <a href="/tags/react/" rel="tag"># react</a>
           
         </div>
       
@@ -395,8 +409,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/20/css居中总结/" rel="next" title="css居中总结">
-                <i class="fa fa-chevron-left"></i> css居中总结
+              <a href="/2018/06/07/浅谈闭包/" rel="next" title="浅谈闭包">
+                <i class="fa fa-chevron-left"></i> 浅谈闭包
               </a>
             
           </div>
@@ -404,10 +418,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/07/浅谈闭包/" rel="prev" title="浅谈闭包">
-                浅谈闭包 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -497,7 +507,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
